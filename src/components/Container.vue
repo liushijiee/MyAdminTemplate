@@ -20,10 +20,8 @@
 import Menu from "./Menu.vue";
 import Header from "./Header.vue";
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
+  name: "Container",
+  
   components:{
     Menu,
     Header
@@ -41,6 +39,7 @@ export default {
 }
 .el-header {
   // background-color: pink;
+  border-bottom: 1px solid rgb(184, 182, 182);
 }
 .el-aside {
   width: auto !important;
@@ -48,6 +47,6 @@ export default {
 }
 
 .el-main {
-  background-color: green;
+  // background-color: green;
 }
 </style>

@@ -4,19 +4,20 @@
           <el-radio-button :label="false">展开</el-radio-button>
           <el-radio-button :label="true">收起</el-radio-button>
         </el-radio-group> -->
-    <div class='title'><h3>通用后台管理系统</h3></div>
+    <!-- <div class='title' ><h3>{{this.isCollapse?'后台':'通用后台管理系统'}}</h3></div> -->
     <el-menu
-      default-active="1"
+      default-active="/home"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
       :collapse="isCollapse"
     >
+    <div class='title' ><h3>{{this.isCollapse?'后台':'通用后台管理系统'}}</h3></div>
       <el-menu-item :index="item.path" v-for="(item) in noChildren" :key='item.path' @click="clickMenu(item)">
         <i :class="`el-icon-${item.icon}`"></i>
         <span slot="title">{{item.label}}</span>
       </el-menu-item>
-      <el-submenu :index="item.path" v-for="item in hasChildren" :key="item.path">
+      <el-submenu index=11 v-for="item in hasChildren" :key="item.path">
         <template slot="title">
           <i :class="`el-icon-${item.icon}`"></i>
           <span slot="title">{{item.label}}</span>
@@ -31,53 +32,16 @@
 
 <script>
 export default {
+  mounted() {
+    this.$bus.$on('changeMenu',(isShow)=>{
+      console.log(isShow)
+      this.isCollapse=isShow
+    })
+  },
   data() {
     return {
       isCollapse: false,
-      menu:[
-          {
-              path: '/home',
-              name: 'home',
-              label: '首页',
-              icon: 's-home',
-              url: 'Home/Home'
-          },
-          {
-              path: '/mall',
-              name: 'mall',
-              label: '商品管理',
-              icon: 'video-play',
-              url: 'MallManage/MallManage'
-          },
-          {
-              path:'/user',
-              name:'user',
-              label:'用户管理',
-              icon:'user',
-              url:'UserManage/UserManage'
-
-          },
-          {
-              label:'其他',
-              icon:'location',
-              children:[
-                  {
-                      path:'/page1',
-                      name:'page1',
-                      label:'页面1',
-                      icon:'setting',
-                      url:'Other/PageOne'
-                  },
-                  {
-                      path:'/page2',
-                      name:'page2',
-                      label:'页面2',
-                      icon:'setting',
-                      url:'Other/PageTwo'
-                  }
-              ]
-          }
-      ]
+      
     };
   },
   methods: {
@@ -99,17 +63,25 @@ export default {
       },
       hasChildren(){
           return this.menu.filter(item=>item.children)
+      },
+      menu(){
+        //console.log(this.$store.state.menu.menuList)
+        return this.$store.state.menu.menuList
       }
-  }
+  },
+  created() {
+    this.$store.dispatch('getMenuList')
+    
+  },
 };
 </script>
 
 <style>
 .father {
-    height: 94vh;
+    height: 100vh;
 }
 .el-menu {
-    height: calc(100% - 40px);
+    height: 100%;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
@@ -121,6 +93,7 @@ export default {
     justify-content: center;
     height: 6vh;
     margin: 20px 0;
+    
 }
 
 

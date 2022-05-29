@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="l-content">
-      <el-button plain icon="el-icon-menu" size="mini"></el-button>
+      <el-button plain icon="el-icon-menu" size="mini" @click="changeMenu"></el-button>
       <h3 style="color: black;margin-left:10px">首页</h3>
     </div>
     <div class="r-content">
@@ -17,7 +17,7 @@
        
       </el-dropdown-menu>
     </el-dropdown>
-      </el-dropdown>
+      
     </div>
   </header>
 </template>
@@ -27,8 +27,16 @@ export default {
   name: "Header",
   data() {
     return {
-      
+      isShow: false
     };
+  },
+  
+  methods: {
+    changeMenu(){
+      this.isShow=this.isShow?false:true
+      console.log(this.isShow)
+      this.$bus.$emit('changeMenu',this.isShow)
+    }
   },
 };
 </script>
