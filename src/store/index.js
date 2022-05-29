@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 import menu from './menu'
+import home from './home'
 // import search from './search';
 // import detail from './detail';
 // import shopcart from "./shopcart";
@@ -12,7 +13,8 @@ import menu from './menu'
 
 export default new Vuex.Store({
     modules:{
-        menu
+        menu,
+        home
         // home,
         // search,
         // detail,
